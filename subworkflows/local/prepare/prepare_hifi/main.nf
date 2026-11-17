@@ -9,13 +9,12 @@ workflow PREPARE_HIFI {
 
     main_in.dump(tag: "Prepare-HIFI input")
 
+    ch_fastplong_in = prepareHiFiReadsAndAdapters(main_in, "fastplong")
+    ch_chopper_in = prepareHiFiReadsAndAdapters(main_in, "chopper")
     // -------------------------------------------------------------------------
     // FASTPLONG
     // -------------------------------------------------------------------------
 
-    ch_fastplong_in = prepareReadsAndAdapters(
-        main_in.filter { it -> it.meta.trimmer == 'fastplong' }
-    )
 
     ch_fastplong_in.reads.dump(tag: "Fastplong HIFI reads in")
 
@@ -42,12 +41,6 @@ workflow PREPARE_HIFI {
     // CHOPPER
     // -------------------------------------------------------------------------
 
-    ch_chopper_in = prepareReadsAndAdapters(
-        main_in.filter { it -> it.meta.trimmer == 'chopper' }
-    )
-
-    ch_chopper_in.reads.dump(tag: "Chopper HIFI reads in")
-
     CHOPPER(ch_chopper_in.reads, ch_chopper_in.adapters)
 
     // processing filtered reads
@@ -64,8 +57,11 @@ workflow PREPARE_HIFI {
 }
 
 
-def prepareReadsAndAdapters(ch_in) {
-    return ch_in
+def prepareHiFiReadsAndAdapters(ch_in, trimmer = null) {
+    if( trimmer == null )
+        throw new IllegalArgumentException("prepareHiFiReadsAndAdapters: trimmer must not be null")
+    def ch_filt = ch_in.filter { it -> it.meta.trimmer == trimmer }
+    return ch_filt
             .filter { it -> it.meta.group }
             .map { it -> [it.meta, it.meta.group, it.meta.hifi_trim, it.meta.hifireads, it.meta.hifi_adapters, it.meta.hifi_fastplong_args] }
             .groupTuple(by: 1)
@@ -83,7 +79,7 @@ def prepareReadsAndAdapters(ch_in) {
                     ]
             }
             .mix(
-                ch_in
+                ch_filt
                     .filter { it -> !it.meta.group }
                     .map {
                         it ->
