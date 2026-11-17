@@ -331,7 +331,6 @@ These arguments can be passed via `<hifi/ont>_fastplot_args` for the different r
 | `hifi_adapters`     | Adaptors for HiFi read-trimming                           | `string`  |
 | `trimmer_hifi_args` | Additional args to be passed to trimmer for HiFi reads    | `string`  |
 | `jellyfish`         | Run jellyfish and genomescope (recommended)               | `boolean` |
-| `jellyfish_k`       | Value of k used during k-mer analysis with jellyfish      | `integer` |
 | `jellyfish_k`       | K-mer table size for jellyfish. Default: 200M             | `string`  |
 | `dump`              | dump jellyfish output                                     | `boolean` |
 
