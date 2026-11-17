@@ -8,8 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [#262](https://github.com/nf-core/genomeassembler/pull/262) Updated to nf-core template version 4.2.1
+- [#266](https://github.com/nf-core/genomeassembler/pull/266) Added the `trimmer` parameter / samplesheet field.
 
 ### `Fixed`
+
+### `Changed`
+
+- [#266](https://github.com/nf-core/genomeassembler/pull/266) Replaced the `fastplong_ont_args` / `fastplong_hifi_args` parameters / samplesheet fields by `trimmer_ont_args` / `trimmer_hifi_args` by the parameters / samplesheet fields respectively.
+- [#266](https://github.com/nf-core/genomeassembler/pull/266) Changed typed of the `genome_size` parameter / samplesheet field from `string` to `integer`.
 
 ### `Dependencies`
 
