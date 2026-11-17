@@ -54,7 +54,7 @@
                 "meta": ["assembly_scaffolding_order"]
             },
             "genome_size": {
-                "type": "string",
+                "type": "integer",
                 "description": "Expected genome size, optional.",
                 "meta": ["genome_size"]
             },
